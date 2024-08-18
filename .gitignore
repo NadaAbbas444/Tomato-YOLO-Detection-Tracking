@@ -1,8 +1,8 @@
-# # Ignore everything in the yolov5 folder
-# yolov5/*
+# Ignore everything in the yolov5 folder
+yolov5/*
 
-# # Except the runs folder within yolov5
-# !yolov5/runs/
+# Except the runs folder within yolov5
+!yolov5/runs/
 
 # Ignore images folder
 images/
