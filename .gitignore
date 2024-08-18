@@ -1,0 +1,15 @@
+# Ignore images folder
+images/
+
+# Ignore labels folder
+labels/
+
+# Ignore laboro_tomato folder
+laboro_tomato/
+
+# Ignore testing_images folder
+testing_images/
+
+# Ignore everything in yolov5 except the runs folder
+yolov5/*
+!yolov5/runs/
