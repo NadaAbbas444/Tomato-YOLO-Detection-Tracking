@@ -1,3 +1,9 @@
+# # Ignore everything in the yolov5 folder
+# yolov5/*
+
+# # Except the runs folder within yolov5
+# !yolov5/runs/
+
 # Ignore images folder
 images/
 
@@ -9,7 +15,3 @@ laboro_tomato/
 
 # Ignore testing_images folder
 testing_images/
-
-# Ignore everything in yolov5 except the runs folder
-yolov5/*
-!yolov5/runs/
