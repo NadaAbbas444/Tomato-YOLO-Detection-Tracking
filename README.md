@@ -7,7 +7,7 @@ This project aims to create a robust and efficient model for detecting, counting
 
 ## Dataset
 
-The dataset used in this project is based on the Laboro Tomato Dataset, which includes annotations for:
+The dataset used in this project is based on the [Laboro Tomato Dataset](https://github.com/laboroai/LaboroTomato), which includes annotations for:
 
 - **Tomato Size**: 
   - Normal
@@ -18,7 +18,7 @@ The dataset used in this project is based on the Laboro Tomato Dataset, which in
   - Half Ripened
   - Green
 
-Each tomato is categorized based on these attributes, allowing the model to distinguish between different tomato types and ripeness stages.
+Each tomato is categorized based on these attributes, allowing the model to distinguish between different tomato types and ripeness stages. To convert the dataset annotations to YOLO format and organize the images, run  data_conversion.py script
 
 ## Project Structure
 

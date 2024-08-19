@@ -1,5 +1,5 @@
-train: /home/nadaabbas/Downloads/Tomatoes_detection/Tomato_Detection_Counting_Tracking_yolo/images/train
-val: /home/nadaabbas/Downloads/Tomatoes_detection/Tomato_Detection_Counting_Tracking_yolo/images/test
+train: images/train
+val: images/test
 
 nc: 6  # Number of classes
 names: ['fully_ripened_normal', 'half_ripened_normal', 'green_normal', 'fully_ripened_cherry', 'half_ripened_cherry', 'green_cherry']
