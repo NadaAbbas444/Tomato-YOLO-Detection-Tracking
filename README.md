@@ -20,6 +20,17 @@ The dataset used in this project is based on the [Laboro Tomato Dataset](https:/
 
 Each tomato is categorized based on these attributes, allowing the model to distinguish between different tomato types and ripeness stages. To convert the dataset annotations to YOLO format and organize the images, run  data_conversion.py script
 
+## Installing DeepSort
+
+To enable tracking in the project, we use DeepSort, a popular tracking algorithm. You can install it using the following commands:
+
+```bash
+git clone https://github.com/nwojke/deep_sort.git
+cd deep_sort
+pip install -r requirements.txt
+
+```
+
 ## Project Structure
 
 The project is organized as follows:
@@ -27,18 +38,42 @@ The project is organized as follows:
 ```
 Tomato_Detection_Counting_Tracking_yolo/
 ├── yolov5/                   # YOLOv5 framework
+│   ├── detect_n_count_n_track.py
+│   ├── detect_n_count.py
+│   ├── detect.py
+│   ├── runs/
+│   │   └── train/
+│   │       └── exp/
+│   │           └── weights/
+│   │               ├── best.pt
+│   │               └── last.pt
+│   ├── tracker.py
+│   ├── train.py
+│   ├── utils/
+│   ├── val.py
+│   ├── yolov5m.pt
+│   └── yolov5s.pt
 ├── data.yaml                 # Configuration file for the dataset
 ├── data_conversion.py        # Script for converting annotations to YOLO format
 ├── images/
 │   ├── train/                # Training images
 │   └── test/                 # Test images
 ├── labels/
-│   ├── train/                # YOLO format annotations for training data
-│   └── test/                 # YOLO format annotations for test data
+│   ├── train/                
+│   └── test/                 
 ├── laboro_tomato/            # Original dataset
-├── testing.py                # Script for testing the model on custom images
-├── testing_images/           # Folder containing images for testing
-└── README.md                 # This README file
+│   ├── annotations/
+│   │   ├── test.json
+│   │   └── train.json
+│   ├── test/
+│   └── train/
+├── testing_images/
+│   ├── test_consective/
+│   └── test_general/
+├── save_results/
+│   ├── exp/
+│   └── exp2/
+└── README.md                 
 ```
 
 ## Training the Model
@@ -61,6 +96,19 @@ python yolov5/detect.py --weights /path/to/weights/best.pt --source /path/to/tes
 
 This command runs the YOLOv5 model on the specified images and saves the detection results in the `save_results` directory.
 
+### 2. **How to Run the Scripts** (Add this as a new section before the "Results" section)
+
+
+## How to Run the Scripts
+
+This project includes different scripts for various tasks like detection, counting, and tracking. Here’s when and how to run each:
+
+| Script Name                   | Description                                                                 | When to Run                                                      | Command Example                                                                 |
+|-------------------------------|-----------------------------------------------------------------------------|------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `detect.py`                   | Runs YOLOv5 model on custom images and saves detection results.             | After training the model or for simple detection without counting.| `python yolov5/detect.py --weights /path/to/weights/best.pt --source /path/to/testing_images/ --save-txt --save-conf --project /path/to/save_results/` |
+| `detect_n_count.py`           | Detects tomatoes and counts them without tracking across frames.            | Use this for counting tomatoes in single images or non-sequential image sets. | `python yolov5/detect_n_count.py --weights /path/to/weights/best.pt --source /path/to/testing_images/ --save-txt --save-conf --project /path/to/save_results/` |
+| `detect_n_count_n_track.py`   | Detects, counts, and tracks tomatoes across consecutive frames.             | Use this when tracking tomatoes across video frames or sequential images is required. | `python yolov5/detect_n_count_n_track.py --weights /path/to/weights/best.pt --source /path/to/testing_images/ --save-txt --save-conf --project /path/to/save_results/` |
+
 ## Results
 
 The model was trained for 50 epochs, achieving the following metrics:
@@ -70,7 +118,36 @@ The model was trained for 50 epochs, achieving the following metrics:
 - **mAP@50**: 84.0%
 - **mAP@50-95**: 69.1%
 
-These results demonstrate the model's effectiveness in detecting and categorizing tomatoes across different ripeness stages and sizes.
+The model exhibits significant improvements across all key metrics, showing a well-trained and robust performance. Training losses decreased by approximately 80%, while validation losses dropped by 75%. Precision improved to 75%, and recall reached 70%, demonstrating the model's increasing accuracy in detecting relevant objects and capturing all relevant instances.
+
+- **Box Loss**: Starting around 0.08, decreased to approximately 0.02, indicating good generalization, with a similar trend in training box loss.
+- **Objectness Loss**: Declined from around 0.25 to 0.05, reflecting the model's ability to maintain detection confidence on unseen data.
+- **Classification Loss**: Fell from about 0.04 to 0.01, showing the model’s increasing accuracy in classifying new data.
+
+- **mAP@0.5**: Climbed from 0.3 to 0.7, indicating strong performance in overall detection accuracy at a lower IoU threshold.
+- **mAP@0.5:0.95**: Rose from around 0.1 to 0.6, demonstrating the model's consistent improvement in precision and recall even at stricter IoU thresholds, further highlighting its robustness.
+
+Overall, these results confirm that the model generalizes effectively, making it suitable for practical applications in tomato detection, counting, and tracking tasks.
+
+![Training results](yolov5/runs/train/exp/results.png)
+
+The F1-Confidence Curve and Precision-Recall Curve provide key insights into the model's performance. The F1 score peaks at **0.79** at a confidence threshold of **0.576**, indicating a strong balance between precision and recall. The Precision-Recall Curve reveals a **mAP@0.5** of **0.840**, showing high accuracy in detection, especially for the green_normal class with a precision of **0.942**. However, classes like fully_ripened_normal and half_ripened_cherry perform slightly lower, indicating areas for improvement. Overall, the model demonstrates robust performance, suitable for practical tomato detection and tracking applications.
+
+![F1-Confidence Curve](yolov5/runs/train/exp/F1_curve.png)
+![Precision-Recall Curve](yolov5/runs/train/exp/PR_curve.png)
+
+## Testing Results
+
+After training, the model was tested on various custom images and sequences to evaluate its performance in real-world scenarios. The following results were observed:
+
+- **Detection Accuracy**: The model successfully detected and categorized tomatoes with high accuracy, even in challenging conditions such as overlapping fruits or varying lighting.
+  
+  ![Detection Example](save_results/exp2/tomato_detection_collage2.jpg)  
+
+- **Tracking Stability**: The `detect_n_count_n_track.py` script demonstrated effective tracking across video frames, maintaining accurate count and identity of tomatoes across consecutive frames. The DeepSort integration proved essential in handling occlusions and re-identifying tomatoes.
+
+  ![Tracking Example](save_results/exp/cons.gif)  
+
 
 ## GitHub Repository
 
