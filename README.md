@@ -157,20 +157,11 @@ This project is hosted on GitHub. You can clone the repository using the followi
 git clone https://github.com/NadaAbbas444/Tomato_Detection_Counting_Tracking_yolo.git
 ```
 
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Acknowledgements
 
 This project leverages the YOLOv5 implementation by [Ultralytics](https://github.com/ultralytics/yolov5) and the Laboro Tomato Dataset. Special thanks to the contributors of these resources for their invaluable tools and data.
 
-## How to Contribute
-
-We welcome contributions to this project! If you have suggestions, improvements, or would like to add new features, feel free to fork the repository and submit a pull request. Please make sure your code adheres to our contribution guidelines.
-
 ## Contact
 
-If you have any questions, suggestions, or issues, please feel free to contact me at [your-email@example.com](mailto:your-email@example.com).
-
-Thank you for using and contributing to this project!
+If you have any questions, suggestions, or issues, please feel free to contact me at [n.elsayed@nu.edu.eg](mailto:n.elsayed@nu.edu.eg).
