@@ -96,8 +96,6 @@ python yolov5/detect.py --weights /path/to/weights/best.pt --source /path/to/tes
 
 This command runs the YOLOv5 model on the specified images and saves the detection results in the `save_results` directory.
 
-### 2. **How to Run the Scripts** (Add this as a new section before the "Results" section)
-
 
 ## How to Run the Scripts
 
