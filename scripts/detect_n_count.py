@@ -7,11 +7,15 @@ from pathlib import Path
 
 import torch
 
+# Set up paths
 FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
-ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+SCRIPT_DIR = FILE.parents[0]  # Directory containing this script
+ROOT = Path(os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'yolov5')))  # YOLOv5 root directory
+print("ROOT", ROOT)
+
+# Add YOLOv5 directory to the front of sys.path
+sys.path.insert(0, str(ROOT))
+
 
 from ultralytics.utils.plotting import Annotator, colors, save_one_box
 
