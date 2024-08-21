@@ -131,9 +131,10 @@ Overall, these results confirm that the model generalizes effectively, making it
 
 ![Training results](yolov5/runs/train/exp/results.png)
 The F1-Confidence Curve and Precision-Recall Curve provide key insights into the model's performance. The F1 score peaks at **0.79** at a confidence threshold of **0.576**, indicating a strong balance between precision and recall. The Precision-Recall Curve reveals a **mAP@0.5** of **0.840**, showing high accuracy in detection, especially for the green_normal class with a precision of **0.942**. However, classes like fully_ripened_normal and half_ripened_cherry perform slightly lower, indicating areas for improvement. Overall, the model demonstrates robust performance, suitable for practical tomato detection and tracking applications.
-
-![F1-Confidence Curve](yolov5/runs/train/exp/F1_curve.png)
-![Precision-Recall Curve](yolov5/runs/train/exp/PR_curve.png)
+<p align="center">
+  <img src="yolov5/runs/train/exp/F1_curve.png" alt="F1-Confidence Curve" width="45%" />
+  <img src="yolov5/runs/train/exp/PR_curve.png" alt="Precision-Recall Curve" width="45%" />
+</p>
 
 ## Testing Results
 
