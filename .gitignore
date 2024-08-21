@@ -1,7 +1,3 @@
-# Ignore everything in the yolov5 folder
-yolov5/
-
-
 # Ignore images folder
 images/
 
