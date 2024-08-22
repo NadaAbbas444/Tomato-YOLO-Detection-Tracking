@@ -38,9 +38,6 @@ The project is organized as follows:
 ```
 Tomato_Detection_Counting_Tracking_yolo/
 ├── yolov5/                   # YOLOv5 framework
-│   ├── detect_n_count_n_track.py
-│   ├── detect_n_count.py
-│   ├── detect.py
 │   ├── runs/
 │   │   └── train/
 │   │       └── exp/
@@ -53,6 +50,10 @@ Tomato_Detection_Counting_Tracking_yolo/
 │   ├── val.py
 │   ├── yolov5m.pt
 │   └── yolov5s.pt
+├── scripts/                   # YOLOv5 framework
+│   ├── detect_n_count_n_track.py
+│   ├── detect_n_count.py
+│   └── detect.py
 ├── data.yaml                 # Configuration file for the dataset
 ├── data_conversion.py        # Script for converting annotations to YOLO format
 ├── images/
