@@ -140,11 +140,11 @@ After training, the model was tested on various custom images and sequences to e
 
 - **Detection Accuracy**: The model successfully detected and categorized tomatoes with high accuracy, even in challenging conditions such as overlapping fruits or varying lighting.
   
-  ![Detection Example](save_results/exp2/tomato_detection_collage2.jpg)  
+  ![Detection Example](save_results/results_general/tomato_detection_collage2.jpg)  
 
 - **Tracking Stability**: The `detect_n_count_n_track.py` script demonstrated effective tracking across video frames, maintaining accurate count and identity of tomatoes across consecutive frames. The DeepSort integration proved essential in handling occlusions and re-identifying tomatoes.
 
-  ![Tracking Example](save_results/exp/cons.gif)  
+  ![Tracking Example](save_results/results_consective/cons.gif)  
 
 
 ## GitHub Repository
