@@ -16,7 +16,7 @@ Functions:
 """
 
 # Define paths for the dataset
-ROOT_DIR = '/home/nadaabbas/Downloads/Tomatoes_detection'
+ROOT_DIR = '/home/nadaabbas/Downloads/Tomatoes_detection' # edit this to your project folder
 TRAIN_IMAGES_PATH = os.path.join(ROOT_DIR, 'Tomato_Detection_Counting_Tracking_yolo/laboro_tomato/train')
 TEST_IMAGES_PATH = os.path.join(ROOT_DIR, 'Tomato_Detection_Counting_Tracking_yolo/laboro_tomato/test')
 TRAIN_ANNOTATIONS_FILE = os.path.join(ROOT_DIR, 'Tomato_Detection_Counting_Tracking_yolo/laboro_tomato/annotations/train.json')
