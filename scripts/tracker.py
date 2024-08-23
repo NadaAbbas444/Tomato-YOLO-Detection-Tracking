@@ -52,19 +52,6 @@ class Tracker:
         bottom = int((center_y + height / 2) * img_h)
         
         return [left, top, right, bottom], 1.0, int(class_id)
-
-    def iou(self, boxA, boxB):
-        """Calculates Intersection over Union (IoU) for two bounding boxes."""
-        xA = max(boxA[0], boxB[0])
-        yA = max(boxA[1], boxB[1])
-        xB = min(boxA[2], boxB[2])
-        yB = min(boxA[3], boxB[3])
-        
-        interArea = max(0, xB - xA) * max(0, yB - yA)
-        boxAArea = (boxA[2] - boxA[0]) * (boxA[3] - boxA[1])
-        boxBArea = (boxB[2] - boxB[0]) * (boxB[3] - boxB[1])
-        
-        return interArea / float(boxAArea + boxBArea - interArea)
     
     def filter_similar_detections(self, detections, similarity_threshold=0.6):
         """Filters out detections that are too similar based on IoU."""
@@ -87,25 +74,50 @@ class Tracker:
             self.color_map[track_id] = tuple(random.choices(range(256), k=3))
         return self.color_map[track_id]
     
-    def draw_detections(self, image, tracks, image_name, label_folder_path):
+    def iou(self, boxA, boxB):
+        """Calculates Intersection over Union (IoU) for two bounding boxes."""
+        xA = max(boxA[0], boxB[0])
+        yA = max(boxA[1], boxB[1])
+        xB = min(boxA[2], boxB[2])
+        yB = min(boxA[3], boxB[3])
+        
+        interArea = max(0, xB - xA) * max(0, yB - yA)
+        boxAArea = (boxA[2] - boxA[0]) * (boxA[3] - boxA[1])
+        boxBArea = (boxB[2] - boxB[0]) * (boxB[3] - boxB[1])
+        
+        return interArea / float(boxAArea + boxBArea - interArea)
+    
+    def draw_detections(self, image, detections, tracks, image_name, label_folder_path):
         """Draws bounding boxes and labels on the image and saves it."""
         class_names = ['fully_ripened_normal', 'half_ripened_normal', 'green_normal', 
-                       'fully_ripened_cherry', 'half_ripened_cherry', 'green_cherry']
+                    'fully_ripened_cherry', 'half_ripened_cherry', 'green_cherry']
 
         for track in tracks:
             track_id = track.track_id
-            bbox = track.to_ltrb()
-            class_id = track.get_det_class()
-            
-            color = self.get_color(track_id)
-            cv2.rectangle(image, (int(bbox[0]), int(bbox[1])), 
-                          (int(bbox[2]), int(bbox[3])), color, 3)  # Thicker bounding boxes
-            label = f'ID: {track_id} - {class_names[class_id]}'
-            cv2.putText(image, label, (int(bbox[0]), int(bbox[1]) - 10), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 3)
+            track_bbox = track.to_ltrb()
+
+            # Find the best matching detection for the current track
+            best_iou = 0
+            best_det = None
+            for det in detections:
+                det_bbox, _, det_class_id = det
+                iou_value = self.iou(track_bbox, det_bbox)
+                if iou_value > best_iou:
+                    best_iou = iou_value
+                    best_det = det
+
+            if best_det is not None:
+                det_bbox, _, det_class_id = best_det
+                color = self.get_color(track_id)
+                cv2.rectangle(image, (int(det_bbox[0]), int(det_bbox[1])), 
+                            (int(det_bbox[2]), int(det_bbox[3])), color, 3)  # Thicker bounding boxes
+                label = f'ID: {track_id} - {class_names[det_class_id]}'
+                cv2.putText(image, label, (int(det_bbox[0]), int(det_bbox[1]) - 10), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 3)
 
         output_path = os.path.join(label_folder_path, image_name)
         cv2.imwrite(output_path, image)
+
 
     def process_folder(self, image_folder_path, label_folder_path):        
         """Processes a folder of images and their corresponding labels."""
@@ -158,11 +170,11 @@ class Tracker:
                 summary_file.write("\n")
 
                 # Draw and save the detection for the current image
-                self.draw_detections(image1, tracks1, image_files[i], label_folder_path)
+                self.draw_detections(image1,detections1, tracks1, image_files[i], label_folder_path)
 
                 tracks2 = self.tracker.update_tracks(detections2, frame=image2)
 
                 # Draw and save the detection for the next image
-                self.draw_detections(image2, tracks2, image_files[i + 1], label_folder_path)
+                self.draw_detections(image2, detections2,tracks2, image_files[i + 1], label_folder_path)
 
             print(f"Total unique objects detected: {len(self.unique_ids)}")
