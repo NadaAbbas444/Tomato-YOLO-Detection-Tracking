@@ -19,6 +19,28 @@ The dataset used in this project is based on the [Laboro Tomato Dataset](https:/
   - Green
 
 Each tomato is categorized based on these attributes, allowing the model to distinguish between different tomato types and ripeness stages. To convert the dataset annotations to YOLO format and organize the images, run  data_conversion.py script
+\
+## Installing YOLOv5 and Replacing the `runs` Folder
+
+To use the pre-trained model provided in this project, you'll need to install YOLOv5 and replace the `runs` folder with the one included in this repository.
+
+### Step 1: Install YOLOv5
+
+You can install YOLOv5 by cloning the official repository in your project directory and installing the necessary dependencies:
+
+```bash
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
+```
+### Step 2: Replace the runs Folder
+
+Once you have YOLOv5 installed, replace the runs folder in the YOLOv5 directory with the runs folder provided in this repository. This will ensure that your project uses the pre-trained model weights and other experiment results.
+
+To do this:
+
+- Copy the runs folder from this repository.
+- Paste it into the YOLOv5 directory, replacing the existing runs folder.
 
 ## Installing DeepSort
 
