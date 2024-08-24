@@ -9,3 +9,12 @@ laboro_tomato/
 
 # Ignore testing_images folder
 testing_images/
+
+# Ignore cache files
+*.cache
+
+# Ignore Python cache files
+*.pyc
+
+# Ignore __pycache__ directories
+__pycache__/
